@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-import { siteContent } from '../../content/content.zh-CN'
+import { useLanguage } from '../../i18n/LanguageProvider'
 
 export function BankQuestions() {
-  const { bankQuestions } = siteContent
+  const { t } = useLanguage()
+  const { bankQuestions } = t
   const [openQuestionId, setOpenQuestionId] = useState<string | null>(null)
 
   return (

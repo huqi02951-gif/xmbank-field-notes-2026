@@ -1,7 +1,8 @@
-import { siteContent } from '../../content/content.zh-CN'
+import { useLanguage } from '../../i18n/LanguageProvider'
 
 export function Hero() {
-  const { hero } = siteContent
+  const { t } = useLanguage()
+  const { hero } = t
 
   return (
     <section className="hero page-grid" id="top" aria-labelledby="hero-title">

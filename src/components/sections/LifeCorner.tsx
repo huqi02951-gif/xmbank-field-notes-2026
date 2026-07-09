@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-import { siteContent } from '../../content/content.zh-CN'
+import { useLanguage } from '../../i18n/LanguageProvider'
 
 export function LifeCorner() {
-  const { life } = siteContent
+  const { t } = useLanguage()
+  const { life } = t
   const [openEntryId, setOpenEntryId] = useState<string | null>(null)
 
   return (

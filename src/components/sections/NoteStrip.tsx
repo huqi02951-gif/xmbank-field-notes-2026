@@ -1,7 +1,11 @@
+import { CopyButton } from '../common/CopyButton'
 import { siteContent } from '../../content/content.zh-CN'
+import { useLanguage } from '../../i18n/LanguageProvider'
 
 export function NoteStrip() {
-  const { noteStrip } = siteContent
+  const { t } = useLanguage()
+  const { noteStrip } = t
+  const copyText = siteContent.noteStrip.lines.join('\n')
 
   return (
     <aside className="note-strip" aria-labelledby="note-strip-title">
@@ -11,6 +15,7 @@ export function NoteStrip() {
         {noteStrip.lines.map((line) => (
           <p key={line}>{line}</p>
         ))}
+        <CopyButton text={copyText} />
       </div>
     </aside>
   )

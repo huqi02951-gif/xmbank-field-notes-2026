@@ -5,8 +5,9 @@ import { BusinessMoments } from './components/sections/BusinessMoments'
 import { Hero } from './components/sections/Hero'
 import { LifeCorner } from './components/sections/LifeCorner'
 import { NoteStrip } from './components/sections/NoteStrip'
+import { LanguageProvider } from './i18n/LanguageProvider'
 
-export function App() {
+function AppContent() {
   return (
     <>
       <a className="skip-link" href="#main-content">
@@ -22,5 +23,13 @@ export function App() {
       </main>
       <Footer />
     </>
+  )
+}
+
+export function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   )
 }

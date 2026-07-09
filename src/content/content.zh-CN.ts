@@ -81,7 +81,11 @@ export const siteContent = {
   },
   noteStrip: {
     title: '留下一句话',
-    lines: [] as string[],
+    lines: [
+      '今天看懂了一个问题。',
+      '还有一个地方，之后想再问。',
+      '银行里的答案，通常不是一个岗位单独完成的。',
+    ],
   },
   apex: {
     title: '经验怎样被整理下来',
@@ -120,4 +124,12 @@ export const siteContent = {
   footer: ['科技业务部 XD.H', '仅供个人交流'],
 } as const
 
-export type SiteContent = typeof siteContent
+type WidenContent<T> = T extends string
+  ? string
+  : T extends readonly (infer Item)[]
+    ? readonly WidenContent<Item>[]
+    : T extends object
+      ? { readonly [Key in keyof T]: WidenContent<T[Key]> }
+      : T
+
+export type SiteContent = WidenContent<typeof siteContent>

@@ -1,7 +1,8 @@
-import { siteContent } from '../../content/content.zh-CN'
+import { useLanguage } from '../../i18n/LanguageProvider'
 
 export function BusinessMoments() {
-  const { moments } = siteContent
+  const { t } = useLanguage()
+  const { moments } = t
 
   return (
     <section

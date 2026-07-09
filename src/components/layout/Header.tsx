@@ -1,3 +1,5 @@
+import { LanguageToggle } from '../common/LanguageToggle'
+
 export function Header() {
   return (
     <header className="site-header">
@@ -10,6 +12,7 @@ export function Header() {
           <a href="#business-moments">业务瞬间</a>
           <a href="#life-corner">下班以后</a>
         </nav>
+        <LanguageToggle />
       </div>
     </header>
   )

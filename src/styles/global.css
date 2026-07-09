@@ -136,6 +136,29 @@ button {
   text-decoration: none;
 }
 
+.language-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(44px, 1fr));
+  min-height: var(--control-height);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  padding: var(--space-1);
+}
+
+.language-toggle button {
+  min-height: var(--control-height);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-ink);
+  padding-inline: var(--space-3);
+}
+
+.language-toggle button[aria-pressed="true"] {
+  background: var(--deep-harbour);
+  color: var(--surface);
+}
+
 .hero {
   min-height: min(95vh, 780px);
   align-items: center;
@@ -404,6 +427,56 @@ blockquote {
   border-block: 1px solid var(--line);
   color: var(--deep-harbour);
   padding-block: var(--space-6);
+}
+
+.copy-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.copy-actions button {
+  min-height: var(--control-height);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--deep-harbour);
+  padding-inline: var(--space-4);
+}
+
+.copy-actions__primary {
+  border-color: transparent !important;
+  background: var(--xiamen-blue) !important;
+  color: var(--surface) !important;
+}
+
+.copy-actions__explicit {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.toast {
+  display: inline-flex;
+  min-height: var(--control-height);
+  align-items: center;
+  gap: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--deep-harbour);
+  color: var(--surface);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-4);
+}
+
+.toast button {
+  min-width: 34px;
+  min-height: 34px;
+  border-color: color-mix(in srgb, var(--surface) 36%, transparent);
+  background: transparent;
+  color: var(--surface);
+  padding-inline: var(--space-2);
 }
 
 .life-corner {
