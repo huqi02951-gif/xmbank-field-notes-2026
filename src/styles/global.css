@@ -479,6 +479,81 @@ blockquote {
   padding-inline: var(--space-2);
 }
 
+.apex-section .section-heading,
+.apex-workbench,
+.apex-disclaimer {
+  grid-column: 1 / -1;
+}
+
+.apex-workbench {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.apex-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-medium);
+  background: var(--surface);
+  padding: var(--space-5);
+}
+
+.apex-panel--process {
+  background: var(--deep-harbour);
+  color: var(--surface);
+}
+
+.apex-panel--process h3,
+.apex-panel--process .section-index {
+  color: var(--surface);
+}
+
+.apex-trace {
+  color: var(--sea-glass);
+  font-weight: 700;
+}
+
+.apex-fieldset {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-5);
+  border: 0;
+  padding: 0;
+}
+
+.apex-fieldset legend {
+  margin-bottom: var(--space-2);
+  color: var(--muted-ink);
+  font-size: var(--text-note-mobile);
+  font-weight: 700;
+}
+
+.apex-fieldset label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  min-height: var(--control-height);
+  align-items: center;
+  gap: var(--space-3);
+  border-top: 1px solid var(--line);
+  padding-block: var(--space-2);
+}
+
+.apex-result {
+  overflow-x: auto;
+  border-radius: var(--radius-medium);
+  background: var(--sea-glass);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.68;
+  margin: 0;
+  padding: var(--space-4);
+  white-space: pre-wrap;
+}
+
+.apex-disclaimer {
+  color: var(--muted-ink);
+  font-size: var(--text-note-mobile);
+}
+
 .life-corner {
   color: var(--coffee);
 }
@@ -591,6 +666,19 @@ blockquote {
 
   .note-strip {
     margin-block: var(--section-gap-desktop);
+  }
+
+  .apex-section .section-heading {
+    grid-column: 1 / span 4;
+  }
+
+  .apex-workbench {
+    grid-column: 5 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 0.74fr) minmax(0, 1fr);
+  }
+
+  .apex-disclaimer {
+    grid-column: 5 / span 7;
   }
 
   .site-footer__inner {

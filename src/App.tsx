@@ -5,6 +5,7 @@ import { BusinessMoments } from './components/sections/BusinessMoments'
 import { Hero } from './components/sections/Hero'
 import { LifeCorner } from './components/sections/LifeCorner'
 import { NoteStrip } from './components/sections/NoteStrip'
+import { ApexTool } from './features/apex/components/ApexTool'
 import { LanguageProvider } from './i18n/LanguageProvider'
 
 function AppContent() {
@@ -19,6 +20,7 @@ function AppContent() {
         <BankQuestions />
         <BusinessMoments />
         <NoteStrip />
+        <ApexTool />
         <LifeCorner />
       </main>
       <Footer />

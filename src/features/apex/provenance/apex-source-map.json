@@ -1,0 +1,32 @@
+{
+  "apexBaselineCommit": "1aa4375c7bf88518e309fcbe636158cd67bf31f8",
+  "reviewMode": "public-sanitized-example",
+  "sourceFiles": [
+    {
+      "sourcePath": "data/checklistData.ts",
+      "sourceBlob": "03ac59aa93329decf2c97ed77265c9a96dc95de8",
+      "targets": [
+        "src/features/apex/types/accountOpening.ts",
+        "src/features/apex/fixtures/accountOpeningMaterials.ts"
+      ],
+      "treatment": "Renamed and reduced to generic public material categories; removed internal reminders, fees, thresholds, systems, customer fields, and operational requirements."
+    },
+    {
+      "sourcePath": "components/MaterialChecklistCenter.tsx",
+      "sourceBlob": "2f078f94038102f73fed6afb4c57f09bff2c8aa8",
+      "targets": [
+        "src/features/apex/utils/formatAccountOpeningChecklist.ts",
+        "src/features/apex/components/ApexWorkbench.tsx",
+        "src/features/apex/components/ApexTool.tsx"
+      ],
+      "treatment": "Reimplemented list-to-numbered-text and checklist interaction as pure/static public UI; no DOM, export, history, storage, router, or original styling copied."
+    }
+  ],
+  "publicSafetyRules": [
+    "No company names, personal names, phone numbers, account numbers, credit figures, fees, internal systems, file export, upload, chat, IndexedDB, backend clients, API keys, or local absolute paths.",
+    "All state remains in React memory except the separate language preference from the i18n layer.",
+    "The fixture is educational and must be re-reviewed before being treated as operational guidance."
+  ],
+  "reviewedAt": "2026-07-09",
+  "reviewStatus": "sanitized-for-public-static-demo"
+}
