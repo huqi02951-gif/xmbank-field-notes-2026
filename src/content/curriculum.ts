@@ -1,0 +1,43 @@
+export const curriculumStages = [
+  {
+    id: 'observe',
+    verb: 'OBSERVE',
+    title: '先把现场看清楚',
+    premise: '专业判断从准确观察开始，而不是从急着给答案开始。',
+    questions: ['谁在参与这件事？', '哪些材料是事实，哪些只是陈述？'],
+    practice: '选择一次业务接触，记录角色、信息流和三个尚未解释的细节。',
+    output: '一页现场观察札记',
+    mentorCheck: '复盘观察与推断是否混在了一起。',
+  },
+  {
+    id: 'question',
+    verb: 'QUESTION',
+    title: '把困惑变成好问题',
+    premise: '好问题会缩小不确定性，也会让下一步行动更清楚。',
+    questions: ['这个结论依赖什么证据？', '如果信息不一致，应先核对哪一项？'],
+    practice: '把一个宽泛疑问改写成三个可以向不同岗位求证的问题。',
+    output: '一组可验证的问题',
+    mentorCheck: '判断问题是否具体、必要，并尊重业务边界。',
+  },
+  {
+    id: 'synthesize',
+    verb: 'SYNTHESIZE',
+    title: '让零散信息形成结构',
+    premise: '整理不是把材料排整齐，而是看见事实之间如何互相支持或冲突。',
+    questions: ['哪些事实能够互相印证？', '最大的缺口会影响什么判断？'],
+    practice: '用“已知—未知—待核对—下一步”整理一个真实但已脱敏的场景。',
+    output: '一页可复核分析',
+    mentorCheck: '检查结论是否超过证据能够支持的范围。',
+  },
+  {
+    id: 'communicate',
+    verb: 'COMMUNICATE',
+    title: '准确地向别人解释',
+    premise: '专业表达既要让人听懂，也要保留条件、边界和确认责任。',
+    questions: ['对方真正需要知道什么？', '哪些措辞可能被误解为承诺？'],
+    practice: '把一段内部理解分别改写成汇报版与对客沟通草稿，并标出待确认处。',
+    output: '两种受众的表达稿',
+    mentorCheck: '确认事实、语气、适用对象和复核人。',
+  },
+] as const
+

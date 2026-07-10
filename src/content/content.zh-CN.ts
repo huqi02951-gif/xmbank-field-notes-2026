@@ -1,15 +1,35 @@
+import { curriculumStages } from './curriculum'
+import {
+  contentBoundaryLabels,
+  fieldMoments,
+  mentorshipProtocol,
+  reflectionPrompts,
+  researchMethod,
+} from './fieldGuide'
+
 export const siteContent = {
   hero: {
-    eyebrow: '2026 · 厦门银行',
-    title: '两岸实习手记',
+    eyebrow: 'FIELD INSTITUTE · 2026',
+    title: '实务研习院',
     paragraphs: [
-      '欢迎来到厦门。',
-      '这里整理了一些银行里值得看的事，也留了一点下班后的轻松入口。',
-      '不用按顺序阅读，也没有每天要交的任务。遇到感兴趣的内容，再点进去看看。',
+      '欢迎进入真实的银行现场。这里没有速成答案，只有一套帮助你观察、提问、整理与表达的方法。',
+      '你可以暂时不知道答案，但需要知道事实从哪里来、判断的边界在哪里，以及下一步应当向谁确认。',
     ],
-    action: '从这里开始',
-    note: '这不是课程表，也不替代正式培训和业务要求。它只帮你在真实工作里，多看懂一点正在发生的事。',
-    route: ['银行', '企业', '城市'],
+    action: '进入课程',
+    note: '一份给台湾高校实习生的实务课程手册。它辅助学习，不替代正式培训、最新制度与有权岗位判断。',
+    route: ['观察', '判断', '表达'],
+    metadata: [
+      ['周期', '四周实务研习'],
+      ['方法', '案例 · 现场 · 复盘'],
+      ['文字', '简体 / 繁體'],
+    ],
+    outcomes: ['看见业务结构', '提出可验证问题', '形成证据判断', '完成专业表达'],
+  },
+  curriculum: {
+    eyebrow: '01 / CURRICULUM',
+    title: '一个月，不只积累经历',
+    introduction: '真正的成长不是“接触过多少业务”，而是你开始用更准确的方法理解复杂问题。四个阶段可以反复往返，不是一条只能向前的进度条。',
+    stages: curriculumStages,
   },
   bankQuestions: {
     title: '银行里值得看的事',
@@ -88,7 +108,7 @@ export const siteContent = {
     ],
   },
   apex: {
-    title: '经验怎样被整理下来',
+    title: 'APEX 可复核工具实验室',
     paragraphs: [
       '银行一线有很多细小却反复出现的工作：整理材料、核对信息、理解一家企业、回应专业问题，再把复杂内容转换成更容易理解的表达。',
       'APEX 把这些经验整理成可以调用、复核和持续完善的能力。这里展示的是经过脱敏的公开示例，不连接内部系统，也不保存输入。',
@@ -98,6 +118,38 @@ export const siteContent = {
     results: ['示例材料准备方向', '一页企业轮廓', '易理解的补充说明'],
     disclaimer:
       '示例仅用于理解信息整理方法，不构成开户、授信或其他业务的办理要求。实际结果需由经办人员依据最新制度和具体情况复核。',
+    classification: '教学示例 · 不连接内部系统 · 不保存业务信息',
+  },
+  fieldPractice: {
+    eyebrow: '04 / FIELD PRACTICE',
+    title: '第一次进入现场，应该看什么',
+    introduction: '现场学习的价值不在于站在旁边，而在于知道自己正在观察什么、哪些信息不能带走，以及回来后值得追问什么。',
+    moments: fieldMoments,
+  },
+  research: {
+    eyebrow: '05 / RESEARCH STUDIO',
+    title: '把课题做成一项真正的研究',
+    introduction: '无论是个人书信、城市记录，还是两岸金融服务课题，高质量成果都需要一条完整的证据链，而不只是漂亮结论。',
+    method: researchMethod,
+    criteria: ['问题真实而具体', '证据来源可解释', '建议能够被实施', '原型可以被体验', '限制与边界被说明'],
+  },
+  mentorship: {
+    eyebrow: '06 / MENTORSHIP',
+    title: '我们怎样一起工作',
+    introduction: '导师不会替你完成判断，但会帮助你获得进入问题的方法、适合当前阶段的工作，以及足够具体的反馈。',
+    protocol: mentorshipProtocol,
+    escalationTitle: '不要等到下次复盘',
+    escalation: '涉及客户隐私、合规疑问、操作风险、人身安全、严重健康状况或你感到无法独立处理的情况，请立即停止并联系导师或项目负责人。及时上报是一种专业能力。',
+  },
+  boundaries: {
+    title: '使用边界',
+    labels: contentBoundaryLabels,
+  },
+  reflection: {
+    eyebrow: '08 / CLOSING REFLECTION',
+    title: '最后带走的，应该是一种方法',
+    introduction: '经历会过去，方法会留下。每周用这四个问题检验一次自己的变化。',
+    prompts: reflectionPrompts,
   },
   life: {
     title: '下班以后',
@@ -121,7 +173,7 @@ export const siteContent = {
       },
     ],
   },
-  footer: ['科技业务部 XD.H', '仅供个人交流'],
+  footer: ['厦门银行 · 2026 台湾高校青年实习计划', '学习资料 · 专业内容以最新制度及有权人员确认为准'],
 } as const
 
 type WidenContent<T> = T extends string

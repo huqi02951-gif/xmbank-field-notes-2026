@@ -17,6 +17,7 @@ export function ApexTool() {
         {apex.paragraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
+        <p className="apex-classification">{apex.classification}</p>
       </div>
       <ApexWorkbench />
       <p className="apex-disclaimer">{apex.disclaimer}</p>

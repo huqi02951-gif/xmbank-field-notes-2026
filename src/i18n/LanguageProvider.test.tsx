@@ -69,7 +69,7 @@ describe('LanguageProvider', () => {
     )
 
     expect(screen.getByText('locale:zh-CN')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: '两岸实习手记' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '实务研习院' })).toBeInTheDocument()
     expect(document.documentElement.lang).toBe('zh-CN')
   })
 

@@ -33,7 +33,8 @@ describe('ApexTool', () => {
   it('renders the three-stage workbench without private data controls', () => {
     renderTool()
 
-    expect(screen.getByRole('region', { name: '经验怎样被整理下来' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'APEX 可复核工具实验室' })).toBeInTheDocument()
+    expect(screen.getByText('教学示例 · 不连接内部系统 · 不保存业务信息')).toBeInTheDocument()
     expect(screen.getByText('零散信息')).toBeInTheDocument()
     expect(screen.getByText('APEX 处理')).toBeInTheDocument()
     expect(screen.getByText('清晰结果')).toBeInTheDocument()

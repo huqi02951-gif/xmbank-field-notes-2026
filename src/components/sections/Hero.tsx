@@ -14,10 +14,18 @@ export function Hero() {
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
-        <a className="primary-link" href="#bank-questions">
+        <a className="primary-link" href="#curriculum">
           {hero.action}
         </a>
       </div>
+
+      <dl className="hero__metadata">
+        {hero.metadata.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+      </dl>
+
+      <ol className="hero__outcomes" aria-label="学习成果">
+        {hero.outcomes.map((outcome, index) => <li key={outcome}><span>{String(index + 1).padStart(2, '0')}</span>{outcome}</li>)}
+      </ol>
 
       <figure className="hero-route">
         <svg

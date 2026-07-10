@@ -1,14 +1,15 @@
 :root {
-  --paper: #f5f1e8;
+  --paper: #f3efe5;
   --surface: #fffdfc;
   --ink: #18262f;
   --muted-ink: #59666e;
   --xiamen-blue: #1268a8;
-  --deep-harbour: #173d56;
+  --deep-harbour: #0d2d42;
   --sea-glass: #dcecf0;
   --brick: #b96049;
   --sun: #e2b95d;
   --coffee: #6a4a3b;
+  --brass: #9b7a3d;
   --line: rgba(24, 38, 47, 0.14);
   --focus: #0b73b9;
 

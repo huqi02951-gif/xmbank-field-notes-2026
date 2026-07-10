@@ -9,7 +9,7 @@ describe('editorial internship experience', () => {
     render(<App />)
 
     expect(
-      screen.getByRole('heading', { level: 1, name: '两岸实习手记' }),
+      screen.getByRole('heading', { level: 1, name: '实务研习院' }),
     ).toBeInTheDocument()
 
     expect(
@@ -43,9 +43,10 @@ describe('editorial internship experience', () => {
     expect(within(lifeSection).queryByText(/(?:待补充|评分|人均)/)).not.toBeInTheDocument()
 
     const footer = screen.getByRole('contentinfo')
-    expect(
-      Array.from(footer.querySelectorAll('p'), (line) => line.textContent),
-    ).toEqual(['科技业务部 XD.H', '仅供个人交流'])
+    expect(Array.from(footer.querySelectorAll('p'), (line) => line.textContent)).toEqual([
+      '厦门银行 · 2026 台湾高校青年实习计划',
+      '学习资料 · 专业内容以最新制度及有权人员确认为准',
+    ])
   })
 
   it('lets readers open one bank question and one life entry', async () => {
