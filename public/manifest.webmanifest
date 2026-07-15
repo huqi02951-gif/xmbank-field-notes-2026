@@ -1,0 +1,12 @@
+{
+  "name": "实习学习站",
+  "short_name": "实习学习",
+  "description": "科技业务部实习学习站",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f1e8",
+  "theme_color": "#f5f1e8",
+  "lang": "zh-CN"
+}

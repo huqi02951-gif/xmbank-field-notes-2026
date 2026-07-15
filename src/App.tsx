@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
 
 import { LanguageToggle } from './components/common/LanguageToggle'
 import { LanguageProvider, useLanguage } from './i18n/LanguageProvider'
@@ -25,16 +25,44 @@ function AppContent() {
   const [route, setRoute] = useState<Route>(readRoute)
   const [query, setQuery] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const onHash = () => {
       const nextRoute = readRoute()
       setRoute(nextRoute)
       setMenuOpen(false)
+      setQuery('')
+      window.scrollTo({ top: 0, behavior: 'auto' })
     }
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
+
+  useEffect(() => {
+    if (!menuOpen) return undefined
+
+    document.body.classList.add('portal-menu-open')
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      setMenuOpen(false)
+      menuButtonRef.current?.focus()
+    }
+    window.addEventListener('keydown', closeOnEscape)
+
+    return () => {
+      document.body.classList.remove('portal-menu-open')
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [menuOpen])
+
+  const handleHome = (event: MouseEvent<HTMLAnchorElement>) => {
+    setMenuOpen(false)
+    if (route.page === 'home') {
+      event.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   const results = useMemo(() => {
     const term = query.trim().toLowerCase()
@@ -48,17 +76,18 @@ function AppContent() {
     <div className="portal-shell">
       <a className="skip-link" href="#main-content">{portal.skip}</a>
       <header className="portal-header">
-        <a className="portal-brand" href="#/" aria-label={portal.brand}>
-          <span className="portal-brand__seal">IL</span>
+        <a className={`portal-brand${route.page === 'module' ? ' is-back' : ''}`} href="#/" aria-label={route.page === 'module' ? portal.backHome : portal.brand} onClick={handleHome}>
+          <span className="portal-brand__seal" aria-hidden="true">{route.page === 'module' ? '←' : 'IL'}</span>
           <span><strong>{portal.brand}</strong><small>{portal.brandEn}</small></span>
         </a>
-        <button className="portal-menu" type="button" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{portal.menu}</button>
-        <nav className={menuOpen ? 'is-open' : ''} aria-label="主导航">
-          <a href="#/">{portal.home}</a>
-          {modules.slice(0, 4).map((module) => <a key={module.id} href={`#/module/${module.id}`}>{module.title}</a>)}
+        <button ref={menuButtonRef} className="portal-menu" type="button" aria-controls="portal-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>{portal.menu}</button>
+        <nav id="portal-navigation" className={menuOpen ? 'is-open' : ''} aria-label="主导航">
+          <a href="#/" onClick={() => setMenuOpen(false)}>{portal.home}</a>
+          {modules.slice(0, 4).map((module) => <a key={module.id} href={`#/module/${module.id}`} onClick={() => setMenuOpen(false)}>{module.title}</a>)}
         </nav>
         <LanguageToggle />
       </header>
+      {menuOpen ? <button className="portal-menu-backdrop" type="button" aria-label={portal.closeMenu} onClick={() => setMenuOpen(false)} /> : null}
       <main id="main-content">
         {route.page === 'home' ? (
           <HomePage portal={portal} modules={modules} query={query} setQuery={setQuery} results={results} />

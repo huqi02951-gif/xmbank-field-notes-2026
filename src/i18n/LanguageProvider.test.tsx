@@ -16,13 +16,13 @@ vi.mock('./convert', async (importOriginal) => {
 
   return {
     ...actual,
-    convertValue: vi.fn(async (value: SiteContent, locale: Locale) => {
+    convertValue: vi.fn(async (value: SiteContent['portal'], locale: Locale) => {
       if (locale === 'zh-TW') {
         return {
           ...value,
           hero: {
             ...value.hero,
-            title: '兩岸實習手記',
+            title: '從一項業務，理解一家銀行。',
           },
         }
       }
@@ -39,7 +39,7 @@ function Probe() {
     <div>
       <p>locale:{locale}</p>
       <p>{pending ? '转换中' : '就绪'}</p>
-      <h1>{t.hero.title}</h1>
+      <h1>{t.portal.hero.title}</h1>
       <button type="button" onClick={() => setLocale('zh-TW')}>
         切换繁体
       </button>
@@ -69,7 +69,7 @@ describe('LanguageProvider', () => {
     )
 
     expect(screen.getByText('locale:zh-CN')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: '实务研习院' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '从一项业务，理解一家银行。' })).toBeInTheDocument()
     expect(document.documentElement.lang).toBe('zh-CN')
   })
 
@@ -83,14 +83,14 @@ describe('LanguageProvider', () => {
     )
 
     await waitFor(() =>
-      expect(screen.getByRole('heading', { name: '兩岸實習手記' })).toBeInTheDocument(),
+      expect(screen.getByRole('heading', { name: '從一項業務，理解一家銀行。' })).toBeInTheDocument(),
     )
     expect(screen.getByText('locale:zh-TW')).toBeInTheDocument()
     expect(document.documentElement.lang).toBe('zh-TW')
   })
 
   it('persists locale changes, preserves scroll position, and exposes pending state', async () => {
-    let resolveConversion: (value: SiteContent) => void = () => undefined
+    let resolveConversion: (value: SiteContent['portal']) => void = () => undefined
     vi.mocked(convertValue).mockImplementationOnce(
       () =>
         new Promise((resolve) => {
@@ -113,14 +113,14 @@ describe('LanguageProvider', () => {
     expect(screen.getByText('转换中')).toBeInTheDocument()
 
     resolveConversion({
-      ...siteContent,
+      ...siteContent.portal,
       hero: {
-        ...siteContent.hero,
-        title: '兩岸實習手記',
+        ...siteContent.portal.hero,
+        title: '從一項業務，理解一家銀行。',
       },
     })
 
     await waitFor(() => expect(screen.getByText('就绪')).toBeInTheDocument())
-    expect(screen.getByRole('heading', { name: '兩岸實習手記' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '從一項業務，理解一家銀行。' })).toBeInTheDocument()
   })
 })
