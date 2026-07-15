@@ -7,9 +7,11 @@
       "sourceBlob": "03ac59aa93329decf2c97ed77265c9a96dc95de8",
       "targets": [
         "src/features/apex/types/accountOpening.ts",
-        "src/features/apex/fixtures/accountOpeningMaterials.ts"
+        "src/features/apex/fixtures/accountOpeningMaterials.ts",
+        "src/content/portal.ts",
+        "src/features/account/components/AccountServiceWorkbench.tsx"
       ],
-      "treatment": "Renamed and reduced to generic public material categories; removed internal reminders, fees, thresholds, systems, customer fields, and operational requirements."
+      "treatment": "Mapped the APEX account-opening and change scenarios into a static practical checklist; removed customer data, fees, thresholds, account values, internal URLs, and system operations. Time-sensitive requirements remain explicitly subject to the latest counter guidance."
     },
     {
       "sourcePath": "components/MaterialChecklistCenter.tsx",
@@ -20,13 +22,22 @@
         "src/features/apex/components/ApexTool.tsx"
       ],
       "treatment": "Reimplemented list-to-numbered-text and checklist interaction as pure/static public UI; no DOM, export, history, storage, router, or original styling copied."
+    },
+    {
+      "sourcePath": "components/tools/SensitiveCommAssistant.tsx",
+      "sourceBlob": "2841c885fcc25183a673ec1a911e4d4db9ac2e3d",
+      "targets": [
+        "src/content/portal.ts",
+        "src/features/account/components/AccountServiceWorkbench.tsx"
+      ],
+      "treatment": "Adapted the customer-contact pattern into a neutral appointment and material-check message. No customer identity, historical message, backend request, or editable prompt is carried over."
     }
   ],
   "publicSafetyRules": [
     "No company names, personal names, phone numbers, account numbers, credit figures, fees, internal systems, file export, upload, chat, IndexedDB, backend clients, API keys, or local absolute paths.",
     "All state remains in React memory except the separate language preference from the i18n layer.",
-    "The fixture is educational and must be re-reviewed before being treated as operational guidance."
+    "The fixture is an internal exchange aid and must be re-reviewed against the latest counter requirements before operational use."
   ],
-  "reviewedAt": "2026-07-09",
+  "reviewedAt": "2026-07-15",
   "reviewStatus": "sanitized-for-public-static-demo"
 }

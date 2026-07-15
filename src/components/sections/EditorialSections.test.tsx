@@ -15,10 +15,25 @@ describe('portal chapter experience', () => {
     expect(screen.getByText(/不能只改日期/)).toBeInTheDocument()
   })
 
-  it('stores lightweight reading progress', () => {
+  it('keeps learning pages free of homework-style read tracking', () => {
     render(<App />)
-    const button = screen.getByRole('button', { name: '标记为已读' })
-    fireEvent.click(button)
-    expect(screen.getByRole('button', { name: /已读/ })).toHaveClass('is-read')
+    expect(screen.queryByRole('button', { name: '标记为已读' })).not.toBeInTheDocument()
+    expect(screen.queryByText(/已读/)).not.toBeInTheDocument()
+  })
+
+  it('turns the account materials chapter into a practical bilingual toolkit', () => {
+    window.location.hash = '#/module/account/materials'
+    render(<App />)
+
+    expect(screen.getByRole('heading', { level: 1, name: '开户与变更实用工作台' })).toBeInTheDocument()
+    expect(screen.getByText('开户尽调申请表')).toBeInTheDocument()
+    expect(screen.getByText('客户经理尽调走访照片')).toBeInTheDocument()
+    expect(screen.getByText('受益所有人系统 PDF')).toBeInTheDocument()
+    expect(screen.getByText('受益所有人登记表')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '复制简体' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '复制繁體' })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('tab', { name: /一般户开户/ }))
+    expect(screen.getByText('基本存款账户信息表或原基本户相关信息')).toBeInTheDocument()
   })
 })
