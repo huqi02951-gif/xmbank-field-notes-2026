@@ -28,6 +28,61 @@ test('account toolkit supports practical scenario switching without read trackin
   await expect(page.getByText('受益所有人及实际控制信息更新材料', { exact: true })).toBeVisible()
 })
 
+test('mobile navigation dismisses from the backdrop and restores page scrolling', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+
+  await page.getByRole('button', { name: '目录' }).click()
+  await expect(page.getByRole('button', { name: '关闭目录' })).toBeVisible()
+  await expect(page.locator('body')).toHaveClass(/portal-menu-open/)
+
+  await page.getByRole('button', { name: '关闭目录' }).click()
+  await expect(page.getByRole('button', { name: '关闭目录' })).toHaveCount(0)
+  await expect(page.locator('body')).not.toHaveClass(/portal-menu-open/)
+})
+
+test('mobile header always provides a clear route back to the portal home', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/#/module/account/materials')
+
+  await expect(page.getByRole('link', { name: '返回实习学习站首页' })).toBeVisible()
+  await page.getByRole('link', { name: '返回实习学习站首页' }).click()
+  await expect(page.getByRole('heading', { level: 1, name: '从一项业务，理解一家银行。' })).toBeVisible()
+  await expect(page.evaluate(() => window.scrollY)).resolves.toBe(0)
+})
+
+test('tapping the portal brand on home returns to the top', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  await page.getByRole('heading', { name: '实习地图' }).scrollIntoViewIfNeeded()
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0)
+
+  await page.getByRole('link', { name: '实习学习站' }).click()
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
+})
+
+test('language control remains reversible while Traditional conversion is loading', async ({ page }) => {
+  await page.goto('/')
+
+  await page.getByRole('button', { name: '繁體' }).click()
+  await expect(page.getByRole('button', { name: '简体' })).toBeEnabled()
+  await page.getByRole('button', { name: '简体' }).click()
+  await expect(page.getByRole('button', { name: '简体' })).toHaveAttribute('aria-pressed', 'true')
+})
+
+test('language control supports a horizontal swipe gesture', async ({ page }) => {
+  await page.goto('/')
+  const toggle = page.getByRole('group', { name: '显示语言' })
+
+  await toggle.dispatchEvent('pointerdown', { pointerId: 1, clientX: 20, pointerType: 'touch' })
+  await toggle.dispatchEvent('pointerup', { pointerId: 1, clientX: 92, pointerType: 'touch' })
+  await expect(page.getByRole('button', { name: '繁體' })).toHaveAttribute('aria-pressed', 'true')
+
+  await toggle.dispatchEvent('pointerdown', { pointerId: 2, clientX: 92, pointerType: 'touch' })
+  await toggle.dispatchEvent('pointerup', { pointerId: 2, clientX: 20, pointerType: 'touch' })
+  await expect(page.getByRole('button', { name: '简体' })).toHaveAttribute('aria-pressed', 'true')
+})
+
 for (const width of [375, 390, 430, 768, 1440]) {
   test(`has no horizontal overflow on core pages at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })

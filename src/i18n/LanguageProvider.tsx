@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type Dispatch,
   type ReactNode,
@@ -35,15 +36,19 @@ function readStoredLocale(): Locale {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(readStoredLocale)
-  const [displayContent, setDisplayContent] = useState<SiteContent>(siteContent)
-  const [pending, setPending] = useState(() => readStoredLocale() === 'zh-TW')
+  const [traditionalPortal, setTraditionalPortal] = useState<SiteContent['portal'] | null>(null)
+  const conversionPromise = useRef<Promise<SiteContent['portal']> | null>(null)
+
+  const prepareTraditionalPortal = useCallback(() => {
+    conversionPromise.current ??= convertValue(siteContent.portal, 'zh-TW')
+    return conversionPromise.current
+  }, [])
 
   const setLocale = useCallback<Dispatch<SetStateAction<Locale>>>((nextLocale) => {
     setLocaleState((currentLocale) => {
       const resolvedLocale =
         typeof nextLocale === 'function' ? nextLocale(currentLocale) : nextLocale
 
-      setPending(resolvedLocale === 'zh-TW')
       return resolvedLocale
     })
   }, [])
@@ -51,31 +56,62 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = locale
     localStorage.setItem(localeStorageKey, locale)
+  }, [locale])
 
+  useEffect(() => {
+    let active = true
+    const warmConversion = () => {
+      prepareTraditionalPortal()
+        .then((convertedPortal) => {
+          if (active) setTraditionalPortal(convertedPortal)
+        })
+        .catch(() => {
+          conversionPromise.current = null
+        })
+    }
+
+    const supportsIdleCallback = 'requestIdleCallback' in window
+    const handle = supportsIdleCallback
+      ? window.requestIdleCallback(warmConversion, { timeout: 1200 })
+      : window.setTimeout(warmConversion, 120)
+
+    return () => {
+      active = false
+      if (supportsIdleCallback) {
+        window.cancelIdleCallback(handle)
+      } else {
+        window.clearTimeout(handle)
+      }
+    }
+  }, [prepareTraditionalPortal])
+
+  useEffect(() => {
     if (locale === 'zh-CN') {
       return undefined
     }
 
     let active = true
 
-    convertValue(siteContent, locale)
-      .then((convertedContent) => {
+    prepareTraditionalPortal()
+      .then((convertedPortal) => {
         if (active) {
-          setDisplayContent(convertedContent)
+          setTraditionalPortal(convertedPortal)
         }
       })
-      .finally(() => {
-        if (active) {
-          setPending(false)
-        }
+      .catch(() => {
+        if (active) setLocaleState('zh-CN')
       })
 
     return () => {
       active = false
     }
-  }, [locale])
+  }, [locale, prepareTraditionalPortal])
 
-  const activeContent = locale === 'zh-CN' ? siteContent : displayContent
+  const pending = locale === 'zh-TW' && traditionalPortal === null
+  const activeContent = useMemo<SiteContent>(() => {
+    if (locale !== 'zh-TW' || !traditionalPortal) return siteContent
+    return { ...siteContent, portal: traditionalPortal }
+  }, [locale, traditionalPortal])
 
   const value = useMemo(
     () => ({

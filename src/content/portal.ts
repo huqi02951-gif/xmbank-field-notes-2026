@@ -55,6 +55,8 @@ export const portalContent = {
   learningPath: '实习地图',
   moduleIndex: '实习知识模块',
   menu: '目录',
+  closeMenu: '关闭目录',
+  backHome: '返回实习学习站首页',
   skip: '跳到主要内容',
   chapterUnit: '个章节',
   search: '搜索知识与工具',
