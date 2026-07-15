@@ -1,18 +1,16 @@
 import { expect, test } from '@playwright/test'
 
-test('complete learning journey and bilingual APEX lab work', async ({ page }) => {
+test('complete portal navigation, search and bilingual chapter work', async ({ page }) => {
   const errors: string[] = []
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()) })
   await page.goto('/')
-  await expect(page.getByRole('heading', { level: 1, name: '实务研习院' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: '一个月，不只积累经历' })).toBeVisible()
-  await page.getByRole('tab', { name: /SYNTHESIZE/ }).click()
-  await expect(page.getByText('一页可复核分析')).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: '从一项业务，理解一家银行。' })).toBeVisible()
+  await page.getByRole('textbox', { name: '搜索知识与工具' }).fill('重大预警')
+  await page.getByRole('link', { name: /贷后重大预警客户续报/ }).click()
+  await expect(page.getByRole('heading', { level: 1, name: '贷后重大预警客户续报' })).toBeVisible()
+  await expect(page.getByText('小海螺批量查询与截图')).toBeVisible()
   await page.getByRole('button', { name: '繁體' }).click()
-  await expect(page.getByRole('heading', { level: 1, name: '實務研習院' })).toBeVisible()
-  await page.getByRole('radio', { name: '专用户示例' }).click()
-  await page.getByRole('checkbox', { name: /主体资格材料/ }).click()
-  await expect(page.getByRole('region', { name: '清晰结果' })).toContainText('已準備材料')
+  await expect(page.getByRole('heading', { level: 1, name: '貸後重大預警客戶續報' })).toBeVisible()
   expect(errors).toEqual([])
 })
 

@@ -6,8 +6,10 @@ import {
   reflectionPrompts,
   researchMethod,
 } from './fieldGuide'
+import { portalContent } from './portal'
 
 export const siteContent = {
+  portal: portalContent,
   hero: {
     eyebrow: 'FIELD INSTITUTE · 2026',
     title: '实务研习院',
