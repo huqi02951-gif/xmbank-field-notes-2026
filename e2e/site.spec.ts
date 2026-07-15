@@ -29,10 +29,12 @@ test('account toolkit supports practical scenario switching without read trackin
 })
 
 for (const width of [375, 390, 430, 768, 1440]) {
-  test(`has no horizontal overflow at ${width}px`, async ({ page }) => {
+  test(`has no horizontal overflow on core pages at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
-    await page.goto('/')
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
-    expect(overflow).toBeLessThanOrEqual(1)
+    for (const path of ['/', '/#/module/account/materials']) {
+      await page.goto(path)
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
+      expect(overflow, `${path} overflow at ${width}px`).toBeLessThanOrEqual(1)
+    }
   })
 }
