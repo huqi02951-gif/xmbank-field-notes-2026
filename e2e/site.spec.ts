@@ -14,6 +14,20 @@ test('complete portal navigation, search and bilingual chapter work', async ({ p
   expect(errors).toEqual([])
 })
 
+test('account toolkit supports practical scenario switching without read tracking', async ({ page }) => {
+  await page.goto('/#/module/account/materials')
+  await expect(page.getByRole('heading', { level: 1, name: '开户与变更实用工作台' })).toBeVisible()
+  await expect(page.getByText('开户尽调申请表')).toBeVisible()
+  await expect(page.getByText('受益所有人系统 PDF')).toBeVisible()
+  await expect(page.getByRole('button', { name: '复制简体' })).toBeVisible()
+  await expect(page.getByRole('button', { name: '复制繁體' })).toBeVisible()
+  await expect(page.getByRole('button', { name: '标记为已读' })).toHaveCount(0)
+
+  await page.getByRole('tab', { name: /法定代表人变更/ }).click()
+  await expect(page.getByText('新法定代表人有效身份证件原件', { exact: true })).toBeVisible()
+  await expect(page.getByText('受益所有人及实际控制信息更新材料', { exact: true })).toBeVisible()
+})
+
 for (const width of [375, 390, 430, 768, 1440]) {
   test(`has no horizontal overflow at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })

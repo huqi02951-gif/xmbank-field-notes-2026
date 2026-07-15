@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 
 import { convertText } from '../../i18n/convert'
 import { useLanguage } from '../../i18n/LanguageProvider'
@@ -8,6 +8,7 @@ import { Toast } from './Toast'
 interface CopyButtonProps {
   text: string
   copyText?: typeof copyInLocale
+  mode?: 'compact' | 'direct'
 }
 
 export async function copyInLocale(text: string, locale: Locale): Promise<void> {
@@ -15,10 +16,11 @@ export async function copyInLocale(text: string, locale: Locale): Promise<void> 
   await globalThis.navigator.clipboard.writeText(convertedText)
 }
 
-export function CopyButton({ text, copyText = copyInLocale }: CopyButtonProps) {
+export function CopyButton({ text, copyText = copyInLocale, mode = 'compact' }: CopyButtonProps) {
   const { locale } = useLanguage()
   const [expanded, setExpanded] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
+  const disclosureId = useId()
 
   async function handleCopy(targetLocale: Locale, successMessage: string) {
     try {
@@ -31,26 +33,28 @@ export function CopyButton({ text, copyText = copyInLocale }: CopyButtonProps) {
 
   return (
     <div className="copy-actions">
-      <button
-        type="button"
-        className="copy-actions__primary"
-        onClick={() => handleCopy(locale, '已复制当前版本')}
-      >
-        复制当前版本
-      </button>
-      <button
-        type="button"
-        className="copy-actions__disclosure"
-        aria-expanded={expanded}
-        aria-controls="copy-language-actions"
-        onClick={() => setExpanded((current) => !current)}
-      >
-        选择复制语言
-      </button>
-      {expanded ? (
+      {mode === 'compact' ? <>
+        <button
+          type="button"
+          className="copy-actions__primary"
+          onClick={() => handleCopy(locale, '已复制当前版本')}
+        >
+          复制当前版本
+        </button>
+        <button
+          type="button"
+          className="copy-actions__disclosure"
+          aria-expanded={expanded}
+          aria-controls={disclosureId}
+          onClick={() => setExpanded((current) => !current)}
+        >
+          选择复制语言
+        </button>
+      </> : null}
+      {mode === 'direct' || expanded ? (
         <div
           className="copy-actions__explicit"
-          id="copy-language-actions"
+          id={mode === 'compact' ? disclosureId : undefined}
           role="group"
           aria-label="复制指定语言"
         >

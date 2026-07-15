@@ -9,6 +9,34 @@ export interface PortalChapter {
   points?: string[]
   steps?: string[]
   note?: string
+  feature?: 'account-toolkit'
+  toolkit?: AccountToolkitContent
+}
+
+export interface AccountToolkitScenario {
+  id: string
+  label: string
+  title: string
+  description: string
+  materials: string[]
+}
+
+export interface AccountToolkitContent {
+  title: string
+  intro: string
+  sourceNote: string
+  scenarios: AccountToolkitScenario[]
+  appointmentTitle: string
+  appointmentPath: string[]
+  appointmentNotes: string[]
+  contactTitle: string
+  contactSteps: string[]
+  counterTitle: string
+  counterIntro: string
+  counterMaterials: string[]
+  messageTitle: string
+  messageIntro: string
+  messageClosing: string
 }
 
 export interface PortalModule {
@@ -21,8 +49,8 @@ export interface PortalModule {
 }
 
 export const portalContent = {
-  brand: '两岸实习学习站',
-  brandEn: 'Cross-Strait Internship Learning Portal',
+  brand: '实习学习站',
+  brandEn: 'Internship Learning Portal',
   home: '首页',
   learningPath: '实习地图',
   moduleIndex: '实习知识模块',
@@ -30,30 +58,26 @@ export const portalContent = {
   skip: '跳到主要内容',
   chapterUnit: '个章节',
   search: '搜索知识与工具',
-  searchPlaceholder: '搜索：基本户、重大预警、小海螺…',
+  searchPlaceholder: '搜索：基本户、开户材料、重大预警、APEX…',
   searchEmpty: '暂时没有找到相关内容，可以换一个关键词。',
   recentlyAdded: '最近新增',
   recommended: '建议从这里开始',
   quickEntries: [
-    ['ACCOUNT SERVICES', '企业开户', '流程、材料与角色'],
+    ['ACCOUNT SERVICES', '开户实用工作台', '预约、材料与沟通文本'],
     ['NEW · POST-LOAN', '重大预警续报', '从上期内容到本期提交'],
-    ['AI & AGENTS', '小海螺', '批量查询与截图归档'],
+    ['AI ARCHITECTURE', 'APEX 能力架构', 'Skills、Workflow 与人工复核'],
   ],
-  continueReading: '继续上次阅读',
-  progress: '阅读进度',
-  markRead: '标记为已读',
-  completed: '已读',
   backToModule: '返回模块',
   previous: '上一节',
   next: '下一节',
   hero: {
-    eyebrow: '2026 INTERNSHIP KNOWLEDGE PORTAL',
+    eyebrow: '2026 INTERNSHIP KNOWLEDGE PORTAL · 科技业务部',
     title: '从一项业务，理解一家银行。',
     intro:
-      '这里把实习中接触到的账户、企业、授信、贷后与 Agent 工具整理成一条清楚的学习路径。遇到具体工作时，从对应模块进入；需要复习时，再回来找到它。',
+      '这里把实习中接触到的账户、企业、授信、贷后与 Agent 工具整理成清楚的业务入口。需要办理、查询或复看时，直接进入对应模块即可。',
     primary: '查看实习地图',
     secondary: '从企业开户开始',
-    note: '内容用于实习交流。具体业务要求以最新制度及经办人员确认为准。',
+    note: '制作人｜科技业务部 XD.Hu · 有问题、有想法，欢迎随时沟通交流。',
   },
   path: [
     ['01', '认识银行与企业', '理解客户经理、企业客户与银行内部岗位的关系。', 'account'],
@@ -61,7 +85,7 @@ export const portalContent = {
     ['03', '认识一家企业', '从访前准备、现场观察与经营信息形成企业轮廓。', 'credit'],
     ['04', '进入授信流程', '串起贷前调查、审查审批、合同落实与放款。', 'credit'],
     ['05', '持续关注企业', '理解贷后管理、征信变化、外部查询与重大预警续报。', 'credit'],
-    ['06', '使用 Agent 提效', '把重复查询、整理与归档变成可复用、可复核的流程。', 'agents'],
+    ['06', '理解 Agent 能力架构', '认识 Skills、Workflow 与人工复核如何组合成可复用能力。', 'agents'],
   ],
   modules: [
     {
@@ -71,7 +95,46 @@ export const portalContent = {
         { id: 'account-basics', eyebrow: '01 / ACCOUNT BASICS', title: '企业对公账户是什么', summary: '企业账户连接经营活动、交易对象与资金路径。', body: ['企业对公账户用于日常收付款、缴税、发放工资、办理融资及使用银行金融服务。', '开户时，银行除了核对证照，也会了解企业是否真实经营、谁在实际控制企业、账户准备如何使用，以及预计交易是否与经营情况相匹配。'], points: ['企业是否真实经营', '主要从事什么业务', '谁在实际控制企业', '账户准备如何使用', '资金往来是否与经营匹配'], note: '现场可以留意：银行正在确认什么、客户容易遗漏什么、哪些要求服务于后续使用，哪些用于核实真实性与防范风险。' },
         { id: 'basic-general', eyebrow: '02 / ACCOUNT TYPES', title: '基本户与一般户', summary: '账户名称相近，使用位置并不相同。', body: ['基本存款账户是企业主要结算账户，一家企业原则上只能开立一个，可用于日常收付款、缴税、发薪及现金业务。', '一般存款账户是在已有基本户后，因结算、融资或其他经营需要开立；企业可按需要开立多个，一般用于转账、项目结算及贷款资金收取和偿还。具体使用范围以最新规定为准。'], points: ['基本户：主要账户，原则上一个', '一般户：已有基本户后按经营需要开立', '开户前先确认账户用途与原基本户信息'] },
         { id: 'opening-flow', eyebrow: '03 / OPENING FLOW', title: '对公开户如何办理', summary: '从线上预约到权限设置，五步形成完整办理链路。', body: ['实际流程会随客户情况与最新要求调整，以下用于理解各环节之间的关系。'], steps: ['线上预约：按企业分别提交申请', '法人意愿确认：核实企业真实开户意愿', '准备资料：按企业、人员与经营资料分类', '现场办理：核对原件、印鉴与账户用途', '设置账户：确定联系人、网银角色与权限'], note: '厦门银行 App 的具体入口、所需材料及有效期，以办理时页面和经办人员提示为准。' },
-        { id: 'materials', eyebrow: '04 / MATERIALS', title: '开户材料清单', summary: '把材料分成企业、人员、账户经营三组，更容易一次看清。', body: ['企业资料包括营业执照、公司章程、经营场所证明及公章、财务章、法人章。', '人员资料包括法定代表人、经办人有效证件，经办人任职证明，以及受益所有人资料；如股东为企业，通常需要逐层了解至最终自然人。', '账户及经营资料包括原基本户信息、纳税及经营佐证等。台湾居民所需证件及具体复印要求，以办理时最新要求为准。'], note: '材料会因账户类型、企业结构和业务场景不同而变化。准备过程中有不确定项，可以先标注，再向经办人员确认。' },
+        {
+          id: 'materials', eyebrow: '04 / PRACTICAL TOOLKIT', title: '开户与变更实用工作台', summary: '选择办理场景，直接查看材料、预约步骤，并复制给客户的沟通文本。',
+          body: ['本页把 APEX 中已经整理的开户与变更材料能力接入实习学习站，并重新设计为便于经办使用的界面。', '材料清单用于准备与沟通，具体要求仍需结合账户类型、企业结构及最新柜面口径确认。'],
+          feature: 'account-toolkit',
+          toolkit: {
+            title: '选择本次办理场景',
+            intro: '材料随账户类型和变更事项变化。先选择场景，再逐项核对客户材料与柜台内部材料。',
+            sourceNote: '内容结构迁移自 APEX 材料清单能力；未连接内部系统，不保存客户信息。',
+            scenarios: [
+              {
+                id: 'open-basic', label: '开户', title: '基本户开户', description: '企业首次建立主要结算账户时使用。',
+                materials: ['单位有效证件原件', '法定代表人有效身份证件原件', '经办人有效身份证件原件', '经办人在职证明（社保、公积金或劳动合同等）', '网银、手机银行管理员及相关联系人身份证件复印件', '受益所有人身份证件复印件', '实际经营场所证明（租赁合同、产权证明或使用说明）', '公章、财务章（如有）及法定代表人印章', '公司章程（需要时提供带水印版本）'],
+              },
+              {
+                id: 'open-general', label: '开户', title: '一般户开户', description: '企业已有基本户，因结算、融资等需要另行开户。',
+                materials: ['单位有效证件原件', '法定代表人有效身份证件原件', '基本存款账户信息表或原基本户相关信息', '经办人有效身份证件原件', '经办人在职证明（需要时提供）', '网银、手机银行管理员及相关联系人身份证件复印件', '受益所有人身份证件复印件', '公章、财务章（如有）及法定代表人印章', '实际经营与账户用途佐证（需要时提供）'],
+              },
+              {
+                id: 'change-name', label: '变更', title: '企业名称变更', description: '企业完成工商名称变更后，同步维护银行账户信息。',
+                materials: ['变更后的单位有效证件原件', '法定代表人有效身份证件原件', '企业名称变更核准或登记材料', '原基本存款账户信息', '原预留印鉴卡或相关账户资料', '经办人有效身份证件原件及在职证明', '新公章、财务章及法定代表人印章', '旧印章或旧印鉴资料（按实际要求准备）'],
+              },
+              {
+                id: 'change-legal', label: '变更', title: '法定代表人变更', description: '法定代表人发生变化后，同步更新账户、印鉴与受益所有人信息。',
+                materials: ['变更后的单位有效证件原件', '新法定代表人有效身份证件原件', '原基本存款账户信息', '原预留印鉴卡或相关账户资料', '经办人有效身份证件原件及在职证明', '公章、财务章及新旧法定代表人印章', '最新公司章程或工商变更材料', '受益所有人及实际控制信息更新材料'],
+              },
+            ],
+            appointmentTitle: '线上预约怎么做',
+            appointmentPath: ['厦门银行 App', '空中柜台', '对公开户', '选择科技支行'],
+            appointmentNotes: ['建议至少提前一天提交，每一家企业分别预约。', '线上通常上传营业执照及法定代表人证件，并由法定代表人实名手机号接收验证码。', '企业已有基本户时，本次开户类型一般选择“一般户”；页面要求基本存款账户信息时，填写原基本户资料。', '页面入口、预约有效期及材料要求可能调整，提交前请以最新页面和经办口径为准。'],
+            contactTitle: '联系经办人和客户',
+            contactSteps: ['先确认办理事项、企业名称、联系人与预计办理时间。', '将对应场景的材料清单复制给客户，请客户逐项核对。', '不确定的材料可先发送电子版给经办人预审，减少现场补件。', '办理前再次确认预约编码、原件、印章、到场人员及实名手机号。'],
+            counterTitle: '交给柜台的内部材料',
+            counterIntro: '客户材料确认后，经办人员还需按内部流程准备并复核以下四项材料，再交柜台办理。',
+            counterMaterials: ['开户尽调申请表', '客户经理尽调走访照片', '受益所有人系统 PDF', '受益所有人登记表'],
+            messageTitle: '生成给客户的材料提示',
+            messageIntro: '您好，关于贵司本次办理事项，我将预约路径和材料清单整理如下，辛苦提前核对：',
+            messageClosing: '材料准备过程中如有不确定，可以先将电子版发给我确认。现场办理时间、预约状态及最新材料要求，我们再一起核对。',
+          },
+          note: '清单适合直接使用，也适合给实习生理解每份材料在开户流程中的位置。涉及客户资料时请使用合规渠道传递。',
+        },
         { id: 'changes-beneficial-owner', eyebrow: '05–06 / MAINTENANCE', title: '账户变更与受益所有人', summary: '账户开立后，企业信息发生变化也需要及时维护。', body: ['常见变更包括企业名称、法定代表人、注册地址、印鉴、联系人、手机号、网银操作员及证件有效期。', '受益所有人是最终拥有、控制企业，或最终享有企业收益的自然人。判断时不能只看营业执照上的法定代表人，还要理解股东层级与实际控制关系。'], steps: ['借款企业', '企业股东', '上层企业股东', '最终自然人'] },
         { id: 'roles', eyebrow: '07 / ACCESS ROLES', title: '联系人与网银角色', summary: '账户能否安全顺畅使用，也取决于企业内部的权限安排。', body: ['常见角色包括大额资金联系人、对账联系人、日常联系人、网银录入员、授权人员、管理员及手机银行超级管理员。', '不同角色可依企业内部安排重合，但应提前明确谁录入、谁授权、谁管理，并确保实名手机号能够接收验证码。'] },
       ],
@@ -88,13 +151,13 @@ export const portalContent = {
       ],
     },
     {
-      id: 'agents', number: '03', label: 'AI & AGENTS', title: '智能工具与工作流',
-      summary: '理解 APEX、小海螺与机器人如何把重复工作变成可复用、可复核的流程。',
+      id: 'agents', number: '03', label: 'AI ARCHITECTURE', title: 'AI 能力与工作流',
+      summary: '以 Skills 封装专业能力，以 Workflow 编排流程，并通过人工复核保持结果可信。',
       chapters: [
-        { id: 'apex', eyebrow: '01 / APEX', title: 'APEX 工作流', summary: '把零散材料与专业经验组织为可复核结果。', body: ['APEX 展示输入、处理与输出之间的关系：客户材料可以被整理成信息框架，专业问题可以被转成明确的补充任务。', '公开示例不连接内部系统、不保存输入，也不替代有权岗位判断。'], steps: ['业务输入', '识别任务', '调用专业能力', '生成可复核结果', '人工确认'] },
-        { id: 'conch', eyebrow: '02 / XIAO HAI LUO', title: '小海螺外部查询', summary: '批量查询、截图归档、异常标记，再回到人工判断。', body: ['先导入确认过的查询主体表，再执行公开信息查询和截图归档。遇到同名主体、访问限制或复杂案件时转人工确认。'], steps: ['主体名单', '批量查询', '截图归档', '异常标记', '人工复核', '更新报告'] },
-        { id: 'robot', eyebrow: '03 / ROBOT LAB', title: '启威机器人搭建', summary: '从真实需求出发，做一个能被测试的小型工作流。', body: ['机器人搭建先回答：服务谁、解决什么问题、输入是什么、输出是什么、如何验证。', '先用小范围样例测试，再记录失败情况和改进方向。'], points: ['明确用户与场景', '定义输入输出', '设置人工确认点', '用样例测试', '记录并迭代'] },
-        { id: 'boundaries', eyebrow: '04–06 / TOOL BOUNDARIES', title: 'Prompt、Skills 与人工复核', summary: '工具负责提效，人负责确认事实、权限与影响。', body: ['适合自动化的环节包括批量整理、格式转换、差异提示与文件归档。涉及客户身份、制度适用、风险结论与审批权限的内容，始终需要人工确认。'] },
+        { id: 'apex', eyebrow: '01 / APEX', title: 'APEX 能力架构', summary: '把零散材料、专业方法与复核节点组织为稳定能力。', body: ['APEX 以业务输入为起点，通过任务识别调用对应 Skill，再由 Workflow 组织多个步骤，形成可以追溯、复核和继续完善的结果。', 'Knowledge Base 提供业务知识，MCP 或工具接口连接可控能力，Evaluation 与 Human-in-the-loop 负责质量检查和最终确认。'], steps: ['业务输入', '任务识别', '调用专业 Skill', 'Workflow 编排', '形成可复核结果', '人工确认'] },
+        { id: 'skills-workflow', eyebrow: '02 / SKILLS & WORKFLOW', title: 'Skills 与 Workflow', summary: '把“会做”拆成可调用能力，把“怎么做完”编排成稳定流程。', body: ['Skill 可以封装材料检查、企业画像、外部风险查询、沟通转译等专业能力；Workflow 决定何时调用、如何传递上下文、在哪里停下来等待人工复核。', '推荐采用小而清晰的 Skills，并为关键输出设置来源、校验与回退路径。'], points: ['Account Opening Skill', 'Business Profile Skill', 'Risk Check Skill', 'Communication Skill', 'Knowledge Base', 'Human-in-the-loop'] },
+        { id: 'boundaries', eyebrow: '03 / GOVERNANCE', title: '工具边界与人工复核', summary: '技术负责提效，人负责确认事实、权限与影响。', body: ['适合自动化的环节包括批量整理、格式转换、差异提示与文件归档。涉及客户身份、制度适用、风险结论与审批权限的内容，始终需要人工确认。'], points: ['来源可追溯', '结果可复核', '权限最小化', '异常可回退', '敏感信息不进入公开环境'] },
+        { id: 'conch', eyebrow: '04 / ENTERPRISE WECHAT BOT', title: '小海螺企微机器人', summary: '位于能力底层的轻量 Bot，用于承接重复查询与结果归档。', body: ['小海螺可接收确认过的主体名单，协助执行公开信息查询、截图归档和异常线索整理，再把结果交给人工复核。', '它是企业微信 Bot 形态的流程入口，不作为本阶段的主要教学内容。'], steps: ['接收任务', '调用查询能力', '归档结果', '提示异常', '人工确认'] },
       ],
     },
     {
@@ -112,5 +175,5 @@ export const portalContent = {
       ],
     },
   ] satisfies PortalModule[],
-  footer: '内部交流｜可联系 XD.Hu',
+  footer: '科技业务部 XD.Hu｜仅供内部交流',
 } as const
